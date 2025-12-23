@@ -1,6 +1,6 @@
-# 💀 The Grinder - MÖRK BORG Character Generator
+# 💀 ScvmGenerator - MÖRK BORG Character Generator
 
-Un generador de personajes automatizado para el juego de rol **Mörk Borg**. Crea "Nameless Scum" en segundos, calculando estadísticas, equipo, presagios y peculiaridades, respetando las reglas de carga y corrupción mágica.
+Un generador de personajes automatizado para el juego de rol **Mörk Borg**. Crea "Nameless Scum" en segundos, calculando estadísticas, equipo, presagios y peculiaridades, respetando las reglas de del juwgo y corrupción mágica.
 
 ## ⚔️ Características
 

@@ -1,0 +1,21 @@
+========================================
+ NOMBRE: Drak
+========================================
+ HP: 4  |  Plata: 80  |  Omens: 2
+----------------------------------------
+ Fuerza: -2  |  AGI:  1  |  PRE:  0  |  DUR:  0
+----------------------------------------
+ Arma:     Maza (Dmg: 8)
+ Armadura: No Armor (Tier 0)
+ Mochila:  Saco (Cap: 10)
+----------------------------------------
+ Inventario:
+   - Linterna con aceite para Presencia + 6 horas
+   - Tienda de campaña
+----------------------------------------
+ RASGOS: Egocéntrico y Arrogante
+----------------------------------------
+ BROKEN BODY:    Ojo recientemente acuchillado y maloliente cubierto con un parche.
+ BAD HABIT:      Silbas cuando intentas esconderte. Lo negarás. Silbas cuando sale 5, 7, 9, 11 o 13 en un d20.
+ TROUBLING TALE: Una herida de batalla dejó un fragmento de metal que se acerca lentamente a tu corazón. Cada día hay un 2% de probabilidad de que lo alcance.
+========================================
