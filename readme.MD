@@ -14,7 +14,7 @@ Un generador de personajes automatizado para el juego de rol **Mörk Borg**. Cre
 ## 🚀 Cómo usarlo
 
 ### Opción A: Ejecutable (Windows)
-Descarga el archivo `TheGrinder.exe` desde la sección de Releases (o la carpeta dist) y ejecútalo. No requiere instalación.
+Descarga el archivo `ScvmGenerator.exe` desde la sección de Releases (o la carpeta dist) y ejecútalo. No requiere instalación.
 
 ### Opción B: Ejecutar desde el código (Python)
 Si prefieres correr el script o modificarlo:
