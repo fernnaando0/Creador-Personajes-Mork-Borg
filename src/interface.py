@@ -1,7 +1,7 @@
 import tkinter as tk
 from tkinter import (
-    messagebox,  # Para ventanas emergentes
-    scrolledtext,  # Para la caja de texto con scroll
+    messagebox,
+    scrolledtext,
 )
 
 import character  # Tu módulo de lógica
@@ -10,32 +10,25 @@ import character  # Tu módulo de lógica
 def generar_personaje():
     # 1. Generar lógica del personaje
     p = character.Character()
-    p.roll_stats()
-    p.set_derived_stats()
-    p.set_starting_equipment()
-    p.set_flavor()
 
-    texto_personaje = str(p)
+    # Leemos el valor de la opción seleccionada (1 = Simple, 2 = Extenso)
+    if var_modo.get() == 1:
+        p.roll_simple()
+        texto_personaje = p.get_simple_str()
+    else:
+        p.roll_stats()
+        p.set_derived_stats()
+        p.set_starting_equipment()
+        p.set_flavor()
+        texto_personaje = str(p)
 
-    # 2. CÁLCULO DE DIMENSIONES (Alto y Ancho)
-    # Dividimos el texto en una lista de líneas
+    # 2. CÁLCULO DE DIMENSIONES
     lineas = texto_personaje.split("\n")
-
-    # A) Altura: Contamos cuántas líneas hay y le sumamos uno para tener margen
     nueva_altura = len(lineas) + 1
-
-    # B) Anchura: Buscamos la línea más larga de todas
     anchura_maxima = max(len(linea) for linea in lineas)
+    nueva_anchura = max(anchura_maxima + 4, 50)
 
-    # Le damos un margen extra de seguridad
-    nueva_anchura = anchura_maxima + 4
-
-    # Establecemos un mínimo para que la ventana no sea extremandamente estrecha
-    if nueva_anchura < 50:
-        nueva_anchura = 50
-
-    # 3. Aplicar configuración a la caja de texto
-    # Al cambiar el tamaño de text_area, la ventana se adaptará sola
+    # 3. Aplicar configuración
     text_area.config(width=nueva_anchura, height=nueva_altura)
 
     # 4. Limpiar e Insertar
@@ -44,71 +37,96 @@ def generar_personaje():
 
 
 def guardar_archivo():
-    """Guarda lo que haya en la caja de texto en un archivo .txt"""
-    contenido = text_area.get("1.0", tk.END)
-
-    # Si la caja está vacía, no guardamos
-    if len(contenido) < 2:
+    contenido = text_area.get("1.0", tk.END).strip()
+    if not contenido:
         messagebox.showwarning("Cuidado", "Primero genera un personaje.")
         return
 
     try:
         with open("personaje_guardado.txt", "w", encoding="utf-8") as f:
             f.write(contenido)
-        messagebox.showinfo("Éxito", "Personaje guardado en 'personaje_guardado.txt'")
+        messagebox.showinfo("Éxito", "Escoria guardada correctamente.")
     except Exception as e:
         messagebox.showerror("Error", f"No se pudo guardar: {e}")
 
 
-# --- CONFIGURACIÓN DE LA VENTANA PRINCIPAL ---
-
+# --- CONFIGURACIÓN DE LA VENTANA ---
 app = tk.Tk()
 app.title("Generador MÖRK BORG")
-app.configure(bg="#202020")
+app.configure(bg="#1a1a1a")
 
 # 1. ETIQUETA DE TÍTULO
 title_label = tk.Label(
     app,
     text=" SCUM GENERATOR ",
     font=("Old English Text MT", 24, "bold"),
-    bg="#202020",
+    bg="#1a1a1a",
     fg="#F1C40F",
 )
-title_label.pack(pady=20)
+title_label.pack(pady=10)
+
+# --- NUEVO: SELECTOR DE MODO ---
+mode_frame = tk.Frame(app, bg="#1a1a1a")
+mode_frame.pack(pady=5)
+
+var_modo = tk.IntVar(value=1)  # 1 por defecto (Simple)
+
+tk.Radiobutton(
+    mode_frame,
+    text="CARNE DE CAÑÓN (SIMPLE)",
+    variable=var_modo,
+    value=1,
+    bg="#1a1a1a",
+    fg="#aaaaaa",
+    selectcolor="#000000",
+    activebackground="#1a1a1a",
+    font=("Consolas", 10),
+).pack(side=tk.LEFT, padx=10)
+
+tk.Radiobutton(
+    mode_frame,
+    text="ESCORIA DETALLADA (EXTENSO)",
+    variable=var_modo,
+    value=2,
+    bg="#1a1a1a",
+    fg="#aaaaaa",
+    selectcolor="#000000",
+    activebackground="#1a1a1a",
+    font=("Consolas", 10),
+).pack(side=tk.LEFT, padx=10)
+# ------------------------------
 
 # 2. CAJA DE TEXTO
 text_area = scrolledtext.ScrolledText(
-    app, width=50, height=10, font=("Consolas", 10), bg="#000000", fg="#00FF00"
+    app, width=60, height=15, font=("Consolas", 10), bg="#000000", fg="#C0C0C0"
 )
-# Auto-ajuste de ancho
 text_area.configure(wrap=tk.NONE)
 text_area.pack(padx=20, pady=10)
 
 # 3. BOTONES
-button_frame = tk.Frame(app, bg="#202020")
+button_frame = tk.Frame(app, bg="#1a1a1a")
 button_frame.pack(pady=20)
 
-# Botón Generar
 btn_generate = tk.Button(
     button_frame,
-    text="INVOCAR DESGRACIADO",
-    font=("Chiller", 12, "bold"),
+    text="INVOCAR",
+    font=("Chiller", 14, "bold"),
     bg="#800000",
     fg="white",
+    width=15,
     command=generar_personaje,
 )
 btn_generate.pack(side=tk.LEFT, padx=20)
 
-# Botón Guardar
 btn_save = tk.Button(
     button_frame,
-    text="GUARDAR TXT",
-    font=("Chiller", 12, "bold"),
+    text="GUARDAR",
+    font=("Chiller", 14, "bold"),
     bg="#404040",
     fg="white",
+    width=15,
     command=guardar_archivo,
 )
 btn_save.pack(side=tk.LEFT, padx=20)
 
-# 4. INICIAR EL BUCLE
 app.mainloop()

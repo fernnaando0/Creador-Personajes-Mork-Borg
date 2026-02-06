@@ -116,6 +116,49 @@ class Character:
         self.bad_habits = random.choice(tables.bad_habits)
         self.troubling_tale = random.choice(tables.troubling_tales)
 
+    def roll_simple(self):
+        # Esto genera solo lo necesario para jugar rapidamente
+        self.roll_stats()
+        self.set_derived_stats()
+        self.set_starting_equipment()
+        self.omens = random.randint(1, 2)
+
+    def get_simple_str(self):
+        """Muestra el resumen técnico: HP, Stats, Equipo y Mochila."""
+        # Extraer info de diccionarios (con seguridad por si son None)
+        w_info = (
+            f"{self.weapon['name']} (D{self.weapon.get('damage_dice')})"
+            if self.weapon
+            else "Ninguna"
+        )
+        a_info = (
+            f"{self.armor['name']} (Tier {self.armor.get('tier')})"
+            if self.armor
+            else "Ninguna"
+        )
+
+        # Info de la mochila
+        if self.backpack:
+            bp_info = f"{self.backpack['name']} (Capacidad: {self.backpack.get('capacidad')} slots)"
+        else:
+            bp_info = "Sin mochila"
+
+        return (
+            f"========================================\n"
+            f"   ESCORIA GENERADA (MODO SIMPLE)      \n"
+            f"========================================\n"
+            f" HP: {self.hp:2} | Plata: {self.silver:3} | Omens: {self.omens}\n"
+            f" STR:{self.strength:2} | AGI:{self.agility:2} | PRE:{self.presence:2} | DUR:{self.toughness:2}\n"
+            f"----------------------------------------\n"
+            f" ARMA:     {w_info}\n"
+            f" ARMADURA: {a_info}\n"
+            f" MOCHILA:  {bp_info}\n"
+            f" INVENTARIO:\n"
+            f"   - {self.objeto1}\n"
+            f"   - {self.objeto2}\n"
+            f"========================================"
+        )
+
     def __str__(self):
         # --- FORMATEO CADENA DE DATOS ---
 
@@ -176,9 +219,17 @@ class Character:
 
 # --- PRUEBA ---
 if __name__ == "__main__":
-    p = Character()
-    p.roll_stats()
-    p.set_derived_stats()
-    p.set_starting_equipment()
-    p.set_flavor()
-    print(p)
+    # Prueba de versión completa
+    print("--- TEST COMPLETO ---")
+    p1 = Character()
+    p1.roll_stats()
+    p1.set_derived_stats()
+    p1.set_starting_equipment()
+    p1.set_flavor()
+    print(p1)
+
+    # Prueba de versión simple
+    print("\n--- TEST SIMPLE ---")
+    p2 = Character()
+    p2.roll_simple()
+    print(p2.get_simple_str())
